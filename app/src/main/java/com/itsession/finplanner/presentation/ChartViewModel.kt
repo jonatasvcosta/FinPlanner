@@ -11,7 +11,7 @@ class ChartViewModel(val financeUseCase: FinanceUseCase) : ViewModel(), KoinComp
     val initialPatrimony = 12000.0
     val uniqueSavings = 5000.0
     val uniqueSavingsMonth = 1
-    val rate = 0.1
+    var rate = 0.1
     val age = 20
 
     fun getChartData() : List<ChartData>{

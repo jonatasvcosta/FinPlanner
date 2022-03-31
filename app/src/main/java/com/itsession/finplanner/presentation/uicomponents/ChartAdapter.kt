@@ -7,18 +7,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.itsession.finplanner.databinding.GraphCellBinding
 import com.itsession.finplanner.presentation.domain.ChartData
 
-class ChartAdapter(val chartData : List<ChartData>) : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
+class ChartAdapter() : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
     companion object{
         const val EACH_BAR_DELAY = 0L
     }
-
+    var chartData : List<ChartData> = listOf()
     var currentlySelected = 0
+
+    fun setData(data : List<ChartData>){
+        chartData = data
+    }
 
     inner class ChartViewHolder(
         private val binding: GraphCellBinding
     ) : RecyclerView.ViewHolder(binding.root){
         fun bindView(data : ChartData, maxValue : Double, position: Int){
-            binding.graphBarCell.setGraphBarValue(data.value, maxValue, data.label, EACH_BAR_DELAY * position)
+            val previousValue = if(position > 1) chartData[position - 1].value else 0.0
+            binding.graphBarCell.setGraphBarValue(data.value, maxValue, previousValue, data.label, EACH_BAR_DELAY * position)
             binding.graphBarCell.alpha = if(data.selected) 1.0f else 0.5f
             binding.graphBarCell.setOnClickListener {
                 chartData[currentlySelected].selected = false

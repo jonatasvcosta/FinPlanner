@@ -60,11 +60,17 @@ class CustomGraphBar : LinearLayout {
         }
     }
 
-    fun setGraphBarValue(value : Double, maxValue : Double, label : String? = null, animationDelay : Long = 0L){
+    fun setGraphBarValue(value : Double, maxValue : Double, previousValue : Double = 0.0, label : String? = null, animationDelay : Long = 0L){
         barValue = value
         barMax = maxValue
-        graphBarBackground?.layoutParams?.height = MAX_BAR_HEIGHT.toInt()
-        graphBarBackground?.requestLayout()
+        graphBarBackground?.apply{
+            layoutParams?.height = MAX_BAR_HEIGHT.toInt()
+            requestLayout()
+        }
+        graphBarColored?.apply {
+            layoutParams.height = (MAX_BAR_HEIGHT * (previousValue / barMax)).roundToInt()
+            requestLayout()
+        }
         Handler().postDelayed({
             val barHeight = MAX_BAR_HEIGHT * (value / barMax)
             graphBarColored?.setHeightWithAnimation(barHeight.roundToInt())

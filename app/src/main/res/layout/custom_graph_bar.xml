@@ -14,13 +14,13 @@
             android:layout_width="40dp"
             android:layout_height="100dp"
             android:alpha="0.5"
-            android:background="#c5c6d0"/>
+            android:background="@color/grey"/>
         <View
             android:layout_gravity="bottom"
             android:id="@+id/graphbar_colored"
             android:layout_width="40dp"
             android:layout_height="0dp"
-            android:background="#0d628b"/>
+            android:background="@color/accent"/>
     </FrameLayout>
     <TextView
         android:id="@+id/graphbar_label"

@@ -12,6 +12,27 @@
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <SeekBar
+        android:layout_marginTop="@dimen/margin_large"
+        android:id="@+id/seekbar_rate"
+        android:layout_margin="@dimen/margin_default"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:thumbTint="@color/accent"
+        android:progressTint="@color/accent"
+        android:max="@integer/maxSeekBar"
+        app:layout_constraintTop_toBottomOf="@id/portfolio_graph"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:layout_marginHorizontal="@dimen/margin_default"
+        android:id="@+id/seekbar_rate_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="10%"
+        style="@style/TextAppearance.Material3.LabelLarge"
+        app:layout_constraintTop_toBottomOf="@id/seekbar_rate"
+        app:layout_constraintStart_toStartOf="parent"/>
     <Button
         android:id="@+id/button_first"
         android:layout_width="wrap_content"
