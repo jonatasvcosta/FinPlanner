@@ -14,8 +14,10 @@ class ChartAdapter() : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
     var chartData : List<ChartData> = listOf()
     var currentlySelected = 0
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(data : List<ChartData>){
         chartData = data
+        notifyDataSetChanged()
     }
 
     inner class ChartViewHolder(

@@ -7,9 +7,9 @@ import org.koin.core.component.KoinComponent
 import usecase.FinanceUseCase
 
 class ChartViewModel(val financeUseCase: FinanceUseCase) : ViewModel(), KoinComponent {
-    val monthSavings = 1000.0
+    var monthSavings = 1000.0
     val initialPatrimony = 12000.0
-    val uniqueSavings = 5000.0
+    var uniqueSavings = 5000.0
     val uniqueSavingsMonth = 1
     var rate = 0.1
     val age = 20

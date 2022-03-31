@@ -27,6 +27,19 @@ class FirstFragment : Fragment(), KoinComponent {
     private val chartViewModel : ChartViewModel by sharedViewModel()
     private val chartAdapter : ChartAdapter = ChartAdapter()
 
+    companion object{
+        const val RATE_PROGRESS_INCREMENT = 1
+        const val PERCENTAGE = "%"
+        const val MAX_RATE = 30
+        const val MAX_MONTHLY_SAVING = 15000
+        const val MAX_UNIQUE_SAVING = 500000
+        const val CURRENCY = "R$ "
+        const val SAVINGS_INCREMENT = 100
+        const val EXPECTED_RATE = "Rentabilidade esperada:"
+        const val EXPECTED_MONTH = "Aportes mensais:"
+        const val EXPECTED_UNIQUE = "Aporte único:"
+    }
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -41,10 +54,8 @@ class FirstFragment : Fragment(), KoinComponent {
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun loadChartData(){
         chartAdapter.setData(chartViewModel.getChartData().filter { it.label.contains("12") })
-        chartAdapter.notifyDataSetChanged()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,22 +66,20 @@ class FirstFragment : Fragment(), KoinComponent {
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
+        val rate = (chartViewModel.rate * 100).toInt()
+        binding.seekBarRate.setupComponent(rate, RATE_PROGRESS_INCREMENT, "", PERCENTAGE, EXPECTED_RATE, MAX_RATE){
+            chartViewModel.rate = it / 100.0
+            loadChartData()
+        }
 
-        binding.seekbarRate.apply {
-            progress = (chartViewModel.rate * 100).toInt()
-            incrementProgressBy(1)
-            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
-                override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                    chartViewModel.rate = p1.toDouble() / 100.0
-                    loadChartData()
-                    val offsetX = (p1 * (binding.seekbarRate.width - (binding.seekbarRate.thumbOffset.toFloat() * 2.0)) / binding.seekbarRate.max).toFloat()
-                    binding.seekbarRateText.text = "$progress%"
-                    binding.seekbarRateText.x = (binding.seekbarRate.x +offsetX + binding.seekbarRate.thumbOffset.toFloat() / 2.0f)
-                }
-                override fun onStartTrackingTouch(p0: SeekBar?) {}
-                override fun onStopTrackingTouch(p0: SeekBar?) {}
+        binding.seekBarMonth.setupComponent(chartViewModel.monthSavings.toInt(), SAVINGS_INCREMENT, CURRENCY, "", EXPECTED_MONTH, MAX_MONTHLY_SAVING){
+            chartViewModel.monthSavings = it.toDouble()
+            loadChartData()
+        }
 
-            })
+        binding.seekBarUnique.setupComponent(chartViewModel.uniqueSavings.toInt(), SAVINGS_INCREMENT, CURRENCY, "", EXPECTED_UNIQUE, MAX_UNIQUE_SAVING){
+            chartViewModel.uniqueSavings = it.toDouble()
+            loadChartData()
         }
 
         binding.portfolioGraph.apply {
