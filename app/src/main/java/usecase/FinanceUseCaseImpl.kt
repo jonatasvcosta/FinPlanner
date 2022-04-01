@@ -10,18 +10,21 @@ class FinanceUseCaseImpl : FinanceUseCase {
         const val MONTH_INTERVAL = (1.0/12.0)
         const val MONTHS_IN_YEAR = 12
     }
+
     override fun getChartData(
         age: Int,
         initialPatrimony: Double,
         monthSaving: Double,
         uniqueSaving: Double,
         uniqueSavingMonth : Int,
-        rate: Double
+        rate: Double,
+        salary : Double,
     ) : List<ChartData> {
         val chartData = mutableListOf<ChartData>()
         var year = Calendar.getInstance().get(Calendar.YEAR)
         var month = Calendar.getInstance().get(Calendar.MONTH)+1
         var value = initialPatrimony
+        var reachedBreakEven : Boolean? = null
         chartData.add(
             ChartData("$month/$year", value, age = age)
         )
@@ -38,14 +41,18 @@ class FinanceUseCaseImpl : FinanceUseCase {
                 savings += uniqueSaving
             }
             yearPassiveIncome = value - savings - initialPatrimony
+            if(yearPassiveIncome > (MONTHS_IN_YEAR * salary + uniqueSaving) && reachedBreakEven != false && salary > 0.0){
+                reachedBreakEven = true
+            }
             chartData.add(
-                ChartData("$month/$year", value, totalSavings = savings, age = projectedAge, passiveIncome = yearPassiveIncome, year = year)
+                ChartData("$month/$year", value, totalSavings = savings, age = projectedAge, passiveIncome = yearPassiveIncome, year = year, hasBreakEven = reachedBreakEven ?: false)
             )
             if(i.mod(MONTHS_IN_YEAR) == 0){
                 year++
                 projectedAge++
                 month = 0
                 yearPassiveIncome = 0.0
+                if(reachedBreakEven == true) reachedBreakEven = false
             }
         }
         return chartData

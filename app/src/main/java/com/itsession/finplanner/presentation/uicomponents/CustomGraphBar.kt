@@ -9,6 +9,7 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.itsession.finplanner.R
 import com.itsession.finplanner.presentation.domain.ExtensionMethods.toFinancialValue
@@ -60,6 +61,10 @@ class CustomGraphBar : LinearLayout {
         }
     }
 
+    fun setGraphBarHighlightColor(){
+        graphBarColored?.setBackgroundColor(ContextCompat.getColor(context, R.color.purple_500))
+    }
+
     fun setGraphBarValue(value : Double, maxValue : Double, previousValue : Double = 0.0, label : String? = null, animationDelay : Long = 0L){
         barValue = value
         barMax = maxValue
@@ -68,6 +73,7 @@ class CustomGraphBar : LinearLayout {
             requestLayout()
         }
         graphBarColored?.apply {
+            setBackgroundColor(ContextCompat.getColor(context, R.color.accent))
             layoutParams.height = (MAX_BAR_HEIGHT * (previousValue / barMax)).roundToInt()
             requestLayout()
         }

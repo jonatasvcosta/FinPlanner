@@ -29,6 +29,7 @@ class ChartAdapter() : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
             val previousValue = if(position > 1) chartData[position - 1].value else 0.0
             binding.graphBarCell.setGraphBarValue(data.value, maxValue, previousValue, data.label, EACH_BAR_DELAY * position)
             binding.graphBarCell.alpha = if(data.selected) 1.0f else 0.5f
+            if(data.hasBreakEven) binding.graphBarCell.setGraphBarHighlightColor()
             binding.graphBarCell.setOnClickListener {
                 chartData[currentlySelected].selected = false
                 notifyItemChanged(currentlySelected)
