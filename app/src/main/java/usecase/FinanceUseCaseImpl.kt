@@ -23,19 +23,29 @@ class FinanceUseCaseImpl : FinanceUseCase {
         var month = Calendar.getInstance().get(Calendar.MONTH)+1
         var value = initialPatrimony
         chartData.add(
-            ChartData("$month/$year", value)
+            ChartData("$month/$year", value, age = age)
         )
+        var savings = 0.0
+        var projectedAge = age
+        var yearPassiveIncome = 0.0
         for(i in  (month+1)..(PROJECTION_YEARS* MONTHS_IN_YEAR+month)){
             value *= ((1.0+rate).pow(MONTH_INTERVAL))
             value += monthSaving
+            savings += monthSaving
             month++
-            if(month == uniqueSavingMonth) value += uniqueSaving
+            if(month == uniqueSavingMonth){
+                value += uniqueSaving
+                savings += uniqueSaving
+            }
+            yearPassiveIncome = value - savings - initialPatrimony
             chartData.add(
-                ChartData("$month/$year", value)
+                ChartData("$month/$year", value, totalSavings = savings, age = projectedAge, passiveIncome = yearPassiveIncome, year = year)
             )
             if(i.mod(MONTHS_IN_YEAR) == 0){
                 year++
+                projectedAge++
                 month = 0
+                yearPassiveIncome = 0.0
             }
         }
         return chartData

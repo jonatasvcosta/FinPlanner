@@ -15,6 +15,16 @@
     <string name="save">Salvar</string>
     <string name="informations_title">Preencha suas informações</string>
 
+    <string name="selected_detail_age">Idade: %1s anos</string>
+    <string name="selected_detail_patrimony">Patrimônio total projetado: R$ %1s</string>
+    <string name="selected_detail_savings">Total de aportes realizados até %1s: R$ %2s</string>
+    <string name="selected_detail_yearly_passive_income">Renda passiva ano %1s: R$ %2s</string>
+    <string name="selected_detail_month_passive_income">Renda passiva média mensal: R$ %1s</string>
+    <string name="selected_detail_total_passive_income">Renda passiva acumulada: R$ %1s</string>
+    <string name="selected_detail_monthly_passive_income">Renda passiva média: R$ %1s</string>
+    <string name="selected_detail_patrimony_percentage_savings">Aportes / patrimônio: %1s</string>
+    <string name="selected_detail_patrimony_percentage_passive_income">Renda passiva / patrimônio: %1s</string>
+
     <string-array name="months">
         <item>Janeiro</item>
         <item>Fevereiro</item>

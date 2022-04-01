@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.FirstFragment">
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/portfolio_graph"
         android:layout_height="wrap_content"
@@ -29,7 +28,13 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/seek_bar_month"
         app:layout_constraintStart_toStartOf="parent"/>
-
+    <include layout="@layout/portfolio_summary"
+        android:id="@+id/selected_period_detail"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/portfolio_graph"/>
     <Button
         android:id="@+id/button_first"
         android:layout_width="wrap_content"
@@ -37,6 +42,6 @@
         android:text="@string/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/portfolio_graph"/>
+        app:layout_constraintStart_toStartOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

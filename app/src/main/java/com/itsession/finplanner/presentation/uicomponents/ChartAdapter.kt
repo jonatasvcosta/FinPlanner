@@ -13,10 +13,12 @@ class ChartAdapter() : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
     }
     var chartData : List<ChartData> = listOf()
     var currentlySelected = 0
+    var isSelected = false
+    var onPeriodSelectedListener : ((Boolean, Int)->Unit)? = null
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(data : List<ChartData>){
+    fun setData(data : List<ChartData>, onPeriodSelectedListener : (Boolean, Int)->Unit){
         chartData = data
+        this.onPeriodSelectedListener = onPeriodSelectedListener
         notifyDataSetChanged()
     }
 
@@ -30,7 +32,9 @@ class ChartAdapter() : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
             binding.graphBarCell.setOnClickListener {
                 chartData[currentlySelected].selected = false
                 notifyItemChanged(currentlySelected)
-                chartData[position].selected = true
+                isSelected = if(position == currentlySelected) !isSelected else true
+                chartData[position].selected = isSelected
+                onPeriodSelectedListener?.invoke(isSelected, position)
                 currentlySelected = position
                 notifyItemChanged(currentlySelected)
             }

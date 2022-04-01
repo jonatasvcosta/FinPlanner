@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.itsession.finplanner.R
 import com.itsession.finplanner.databinding.FragmentFirstBinding
 import com.itsession.finplanner.presentation.domain.ChartData
+import com.itsession.finplanner.presentation.domain.ExtensionMethods.roundFigures
+import com.itsession.finplanner.presentation.domain.ExtensionMethods.setIsVisible
+import com.itsession.finplanner.presentation.domain.ExtensionMethods.toFinancialValue
 import com.itsession.finplanner.presentation.uicomponents.ChartAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.component.KoinComponent
@@ -55,7 +58,27 @@ class FirstFragment : Fragment(), KoinComponent {
     }
 
     fun loadChartData(){
-        chartAdapter.setData(chartViewModel.getChartData().filter { it.label.contains("12") })
+        val chartData = chartViewModel.getChartData()
+        val filteredData = chartData.filter { it.label.contains("12") }
+        chartAdapter.setData(filteredData){
+            isSelected, position ->
+            binding.seekBarMonth.setIsVisible(!isSelected)
+            binding.seekBarUnique.setIsVisible(!isSelected)
+            binding.seekBarRate.setIsVisible(!isSelected)
+            binding.selectedPeriodDetail.apply{
+                val selectedChart = filteredData.get(position)
+                val sumPassiveIncome = (selectedChart.value - selectedChart.totalSavings)
+                portfolioDetail.setIsVisible(isSelected)
+                age.text = getString(R.string.selected_detail_age, selectedChart.age.toString())
+                patrimony.text = getString(R.string.selected_detail_patrimony, selectedChart.value.toFinancialValue())
+                savings.text = getString(R.string.selected_detail_savings, selectedChart.label, selectedChart.totalSavings.toFinancialValue())
+                currentPassiveIncome.text = getString(R.string.selected_detail_yearly_passive_income, selectedChart.year.toString(), selectedChart.passiveIncome.toFinancialValue())
+                totalPassiveIncome.text = getString(R.string.selected_detail_total_passive_income, sumPassiveIncome.toFinancialValue())
+                patrimonyPercentageSavings.text = getString(R.string.selected_detail_patrimony_percentage_savings, (100* selectedChart.totalSavings / selectedChart.value).roundFigures(1))
+                patrimonyPercentagePassiveIncome.text = getString(R.string.selected_detail_patrimony_percentage_passive_income, (100 * sumPassiveIncome / selectedChart.value).roundFigures(1))
+                monthlyPassiveIncome.text = getString(R.string.selected_detail_monthly_passive_income, (selectedChart.passiveIncome / 12.0).toFinancialValue())
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
