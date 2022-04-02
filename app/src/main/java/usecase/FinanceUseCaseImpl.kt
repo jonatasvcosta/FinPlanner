@@ -31,6 +31,7 @@ class FinanceUseCaseImpl : FinanceUseCase {
         var savings = 0.0
         var projectedAge = age
         var yearPassiveIncome = 0.0
+        var previousPassiveIncome = 0.0
         for(i in  (month+1)..(PROJECTION_YEARS* MONTHS_IN_YEAR+month)){
             value *= ((1.0+rate).pow(MONTH_INTERVAL))
             value += monthSaving
@@ -40,18 +41,18 @@ class FinanceUseCaseImpl : FinanceUseCase {
                 value += uniqueSaving
                 savings += uniqueSaving
             }
-            yearPassiveIncome = value - savings - initialPatrimony
+            yearPassiveIncome = value - savings - initialPatrimony - previousPassiveIncome
             if(yearPassiveIncome > (MONTHS_IN_YEAR * salary + uniqueSaving) && reachedBreakEven != false && salary > 0.0){
                 reachedBreakEven = true
             }
             chartData.add(
                 ChartData("$month/$year", value, totalSavings = savings, age = projectedAge, passiveIncome = yearPassiveIncome, year = year, hasBreakEven = reachedBreakEven ?: false)
             )
+            previousPassiveIncome = yearPassiveIncome
             if(i.mod(MONTHS_IN_YEAR) == 0){
                 year++
                 projectedAge++
                 month = 0
-                yearPassiveIncome = 0.0
                 if(reachedBreakEven == true) reachedBreakEven = false
             }
         }

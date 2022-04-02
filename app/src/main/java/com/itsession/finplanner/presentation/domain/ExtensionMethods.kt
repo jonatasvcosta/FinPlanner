@@ -18,8 +18,9 @@ object ExtensionMethods {
     fun Double.roundFigures(places : Int) : String{
         var bd: BigDecimal = BigDecimal.valueOf(this)
         bd = bd.setScale(places, RoundingMode.HALF_UP)
-        var text = bd.toString().replace(".00","")
-        if(text.last() == '0') text = text.substring(0, text.length - 1)
+        var text = bd.toString()
+        if(text.endsWith(".0") && text.length > 2) text = text.substring(0, text.length - 2)
+        if(text.endsWith(".00") && text.length > 3) text = text.substring(0, text.length - 3)
         return text
     }
 

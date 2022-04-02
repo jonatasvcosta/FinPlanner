@@ -67,15 +67,15 @@ class FirstFragment : Fragment(), KoinComponent {
             binding.seekBarRate.setIsVisible(!isSelected)
             binding.selectedPeriodDetail.apply{
                 val selectedChart = filteredData.get(position)
-                val sumPassiveIncome = (selectedChart.value - selectedChart.totalSavings)
+                val sumPassiveIncome = (selectedChart.value - selectedChart.totalSavings - chartViewModel.initialPatrimony)
                 portfolioDetail.setIsVisible(isSelected)
                 age.text = getString(R.string.selected_detail_age, selectedChart.age.toString())
                 patrimony.text = getString(R.string.selected_detail_patrimony, selectedChart.value.toFinancialValue())
                 savings.text = getString(R.string.selected_detail_savings, selectedChart.label, selectedChart.totalSavings.toFinancialValue())
                 currentPassiveIncome.text = getString(R.string.selected_detail_yearly_passive_income, selectedChart.year.toString(), selectedChart.passiveIncome.toFinancialValue())
                 totalPassiveIncome.text = getString(R.string.selected_detail_total_passive_income, sumPassiveIncome.toFinancialValue())
-                patrimonyPercentageSavings.text = getString(R.string.selected_detail_patrimony_percentage_savings, (100* selectedChart.totalSavings / selectedChart.value).roundFigures(1))
-                patrimonyPercentagePassiveIncome.text = getString(R.string.selected_detail_patrimony_percentage_passive_income, (100 * sumPassiveIncome / selectedChart.value).roundFigures(1))
+                patrimonyPercentageSavings.text = getString(R.string.selected_detail_patrimony_percentage_savings, (100* selectedChart.totalSavings / selectedChart.value).roundFigures(1)+"%")
+                patrimonyPercentagePassiveIncome.text = getString(R.string.selected_detail_patrimony_percentage_passive_income, (100 * sumPassiveIncome / selectedChart.value).roundFigures(1)+"%")
                 monthlyPassiveIncome.text = getString(R.string.selected_detail_monthly_passive_income, (selectedChart.passiveIncome / 12.0).toFinancialValue())
             }
         }
