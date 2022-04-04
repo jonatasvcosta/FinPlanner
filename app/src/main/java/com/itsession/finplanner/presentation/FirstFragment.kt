@@ -38,9 +38,9 @@ class FirstFragment : Fragment(), KoinComponent {
         const val MAX_UNIQUE_SAVING = 500000
         const val CURRENCY = "R$ "
         const val SAVINGS_INCREMENT = 100
-        const val EXPECTED_RATE = "Rentabilidade esperada:"
+        const val EXPECTED_RATE = "Rentabilidade anual esperada:"
         const val EXPECTED_MONTH = "Aportes mensais:"
-        const val EXPECTED_UNIQUE = "Aporte único:"
+        const val EXPECTED_UNIQUE = "Aporte anual único:"
     }
 
     // This property is only valid between onCreateView and
@@ -57,7 +57,7 @@ class FirstFragment : Fragment(), KoinComponent {
 
     }
 
-    fun loadChartData(){
+    private fun loadChartData(){
         val chartData = chartViewModel.getChartData()
         val filteredData = chartData.filter { it.label.contains("12") }
         chartAdapter.setData(filteredData){

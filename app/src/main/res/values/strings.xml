@@ -11,7 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="age">Idade</string>
     <string name="monthly_saving">Aportes mensais (R$)</string>
-    <string name="unique_saving">Aporte único (R$)</string>
+    <string name="unique_saving">Aporte anual único (R$)</string>
     <string name="save">Salvar</string>
     <string name="informations_title">Preencha suas informações</string>
 

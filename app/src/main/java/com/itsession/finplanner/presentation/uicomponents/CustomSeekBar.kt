@@ -7,6 +7,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.itsession.finplanner.R
+import com.itsession.finplanner.presentation.domain.ExtensionMethods.toFinancialValue
 
 class CustomSeekBar : ConstraintLayout {
     constructor(context: Context) : super(context)
@@ -47,18 +48,20 @@ class CustomSeekBar : ConstraintLayout {
         title.text = labelTitle
 
         seekBar?.apply {
-            progress = initialProgress
             max = maxValue
+            progress = initialProgress
             incrementProgressBy(increment)
             var offsetX = (initialProgress * width / max).toFloat()
-            label?.text = "$labelPrefix$progress$labelSuffix"
+            val formattedProgress = if(maxValue > 100) progress.toDouble().toFinancialValue() else progress.toString()
+            label?.text = "$labelPrefix$formattedProgress$labelSuffix"
             label?.x = (x +offsetX + thumbOffset.toFloat() / 2.0f)
 
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
                 override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                     onProgressChangedListener?.invoke(p1)
                     offsetX = (p1 * (width - (thumbOffset.toFloat() * 2.0)) / max).toFloat()
-                    label?.text = "$labelPrefix$progress$labelSuffix"
+                    val formattedProgress = if(maxValue > 100) progress.toDouble().toFinancialValue() else progress.toString()
+                    label?.text = "$labelPrefix$formattedProgress$labelSuffix"
                     label?.x = (x +offsetX + thumbOffset.toFloat() / 2.0f)
                 }
                 override fun onStartTrackingTouch(p0: SeekBar?) {}
