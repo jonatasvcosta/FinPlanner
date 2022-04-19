@@ -1,19 +1,14 @@
 package com.itsession.finplanner.presentation
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import android.widget.Toast
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.itsession.finplanner.R
 import com.itsession.finplanner.databinding.FragmentFirstBinding
-import com.itsession.finplanner.presentation.domain.ChartData
 import com.itsession.finplanner.presentation.domain.ExtensionMethods.roundFigures
 import com.itsession.finplanner.presentation.domain.ExtensionMethods.setIsVisible
 import com.itsession.finplanner.presentation.domain.ExtensionMethods.toFinancialValue
@@ -29,6 +24,7 @@ class FirstFragment : Fragment(), KoinComponent {
     private var _binding: FragmentFirstBinding? = null
     private val chartViewModel : ChartViewModel by sharedViewModel()
     private val chartAdapter : ChartAdapter = ChartAdapter()
+    private var currentlySelected = 0
 
     companion object{
         const val RATE_PROGRESS_INCREMENT = 1
@@ -60,11 +56,10 @@ class FirstFragment : Fragment(), KoinComponent {
     private fun loadChartData(){
         val chartData = chartViewModel.getChartData()
         val filteredData = chartData.filter { it.label.contains("12") }
-        chartAdapter.setData(filteredData){
+        chartAdapter.setData(data = filteredData, selected = currentlySelected){
             isSelected, position ->
-            binding.seekBarMonth.setIsVisible(!isSelected)
-            binding.seekBarUnique.setIsVisible(!isSelected)
-            binding.seekBarRate.setIsVisible(!isSelected)
+            currentlySelected = if(isSelected) position else 0
+            binding.buttonApplyAll.setIsVisible(isSelected)
             binding.selectedPeriodDetail.apply{
                 val selectedChart = filteredData.get(position)
                 val sumPassiveIncome = (selectedChart.value - selectedChart.totalSavings - chartViewModel.initialPatrimony)
@@ -81,12 +76,11 @@ class FirstFragment : Fragment(), KoinComponent {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
         loadChartData()
 
-        binding.buttonFirst.setOnClickListener {
+        binding.buttonApplyAll.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
         val rate = (chartViewModel.rate * 100).toInt()

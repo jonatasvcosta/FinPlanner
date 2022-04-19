@@ -9,13 +9,20 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.itsession.finplanner.R
 import com.itsession.finplanner.databinding.FragmentSecondBinding
+import com.itsession.finplanner.presentation.domain.InputScreenData
+import com.itsession.finplanner.presentation.domain.InputScreenType
+import org.koin.android.compat.SharedViewModelCompat.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class SecondFragment : Fragment() {
+class SecondFragment : Fragment(), KoinComponent {
 
     private var _binding: FragmentSecondBinding? = null
+    private val chartViewModel : ChartViewModel by sharedViewModel()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -31,21 +38,24 @@ class SecondFragment : Fragment() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.monthPicker.apply {
-            minValue = 0
-            maxValue = 11
-            displayedValues = resources.getStringArray(R.array.months)
-            setOnValueChangedListener { _, _, month ->
-
+    private fun setupInputScreen(){
+        context?.let {
+            binding.customInputScreen.setupInputScreen(
+                chartViewModel.getInputData(it)
+            ){
+                chartViewModel.nextStep {
+                    findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
+                }
+                setupInputScreen()
             }
         }
 
-        binding.buttonSave.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupInputScreen()
+        binding.customInputScreen.editText?.performClick()
     }
 
     override fun onDestroyView() {

@@ -16,8 +16,10 @@ class ChartAdapter() : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
     var isSelected = false
     var onPeriodSelectedListener : ((Boolean, Int)->Unit)? = null
 
-    fun setData(data : List<ChartData>, onPeriodSelectedListener : (Boolean, Int)->Unit){
+    fun setData(data : List<ChartData>, selected : Int, onPeriodSelectedListener : (Boolean, Int)->Unit){
         chartData = data
+        currentlySelected = selected
+        chartData[currentlySelected].selected = true
         this.onPeriodSelectedListener = onPeriodSelectedListener
         notifyDataSetChanged()
     }

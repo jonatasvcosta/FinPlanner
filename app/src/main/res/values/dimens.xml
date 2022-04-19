@@ -2,6 +2,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margin_default">20dp</dimen>
     <dimen name="margin_large">40dp</dimen>
+    <dimen name="margin_extra_large">60dp</dimen>
     <dimen name="text_small">14sp</dimen>
     <dimen name="text_medium">16sp</dimen>
     <dimen name="text_large">20sp</dimen>

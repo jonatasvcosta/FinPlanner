@@ -5,6 +5,7 @@
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
+    <string name="apply_to_next_years">Aplicar para os próximos anos</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
@@ -14,6 +15,7 @@
     <string name="unique_saving">Aporte anual único (R$)</string>
     <string name="save">Salvar</string>
     <string name="informations_title">Preencha suas informações</string>
+    <string name="currency">R$ </string>
 
     <string name="selected_detail_age">Idade: %1s anos</string>
     <string name="selected_detail_patrimony">Patrimônio total projetado: R$ %1s</string>
@@ -24,6 +26,13 @@
     <string name="selected_detail_monthly_passive_income">Renda passiva média: R$ %1s</string>
     <string name="selected_detail_patrimony_percentage_savings">Aportes / patrimônio: %1s</string>
     <string name="selected_detail_patrimony_percentage_passive_income">Renda passiva / patrimônio: %1s</string>
+
+    <string name="input_screen_age">Qual é a sua idade?</string>
+    <string name="input_screen_salary">"Qual é o seu salário atual aproximado?"</string>
+    <string name="input_screen_monthly_savings">Quanto consegue investir mensalmente em média?</string>
+    <string name="input_screen_initial_patrimony">Qual é o seu patrimônio atual aproximado?</string>
+    <string name="input_screen_unique_savings">Caso faça aportes anualmente não recorrentes (Bônus, PLR), qual é o valor médio?</string>
+    <string name="input_screen_unique_savings_month">Caso faça aportes anualmente não recorrentes (Bônus, PLR), em qual mês se concentra o maior valor?</string>
 
     <string-array name="months">
         <item>Janeiro</item>

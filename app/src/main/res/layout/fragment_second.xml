@@ -8,61 +8,8 @@
     android:gravity="center_horizontal"
     tools:context=".presentation.SecondFragment">
 
-    <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_large"
-        android:text="@string/informations_title"
-        android:layout_marginTop="@dimen/margin_large" />
-
-    <EditText
-        android:id="@+id/age"
-        android:layout_margin="@dimen/margin_default"
+    <com.itsession.finplanner.presentation.uicomponents.CustomInputScreen
+        android:id="@+id/custom_input_screen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="@string/age"/>
-
-    <EditText
-        android:id="@+id/monthly_saving"
-        android:layout_margin="@dimen/margin_default"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="@string/monthly_saving"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/unique_saving"
-            android:layout_marginTop="@dimen/margin_default"
-            android:layout_marginHorizontal="@dimen/margin_default"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="@string/unique_saving"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/month_picker"/>
-        <NumberPicker
-            android:layout_marginHorizontal="@dimen/margin_default"
-            android:id="@+id/month_picker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
+        android:layout_height="match_parent"/>
 </LinearLayout>
