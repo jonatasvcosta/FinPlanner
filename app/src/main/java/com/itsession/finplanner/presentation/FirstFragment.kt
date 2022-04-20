@@ -62,6 +62,8 @@ class FirstFragment : Fragment(), KoinComponent {
             isPeriodSelected = isSelected
             currentlySelected = if(isSelected) position else 0
             binding.buttonApplyAll.setIsVisible(isSelected)
+            binding.buttonEditPersonalData.setIsVisible(isSelected)
+
             binding.selectedPeriodDetail.apply{
                 val selectedChart = filteredData.get(position)
                 val sumPassiveIncome = (selectedChart.value - selectedChart.totalSavings - chartViewModel.initialPatrimony)
@@ -82,9 +84,15 @@ class FirstFragment : Fragment(), KoinComponent {
     override fun onResume() {
         super.onResume()
         loadChartData()
+        binding.buttonEditPersonalData.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
 
         binding.buttonApplyAll.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            chartViewModel.setRate(currentlySelected, chartViewModel.rates[currentlySelected], true)
+            chartViewModel.setMonthSavings(currentlySelected, chartViewModel.monthSavings[currentlySelected], true)
+            chartViewModel.setUniqueSavings(currentlySelected, chartViewModel.uniqueSavings[currentlySelected], true)
+            loadChartData()
         }
 
         val rate = (chartViewModel.rates[currentlySelected] * 100).toInt()

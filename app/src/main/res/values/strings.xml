@@ -6,6 +6,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="apply_to_next_years">Aplicar para os próximos anos</string>
+    <string name="edit_personal_data">Editar dados iniciais</string>
     <string name="previous">Previous</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>

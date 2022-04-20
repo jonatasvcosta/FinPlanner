@@ -44,10 +44,23 @@
             android:visibility="gone"
             android:id="@+id/button_apply_all"
             android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginVertical="@dimen/margin_large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/apply_to_next_years"
             app:layout_constraintTop_toBottomOf="@id/seek_bar_unique"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/button_edit_personal_data"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginVertical="@dimen/margin_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_personal_data"
+            app:layout_constraintTop_toBottomOf="@id/button_apply_all"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
