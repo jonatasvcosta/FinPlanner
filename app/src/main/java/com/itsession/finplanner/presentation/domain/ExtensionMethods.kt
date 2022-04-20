@@ -10,14 +10,14 @@ object ExtensionMethods {
     fun Double.toFinancialValue() : String{
         currencyMap.forEach { map ->
             val divider = (map.key as? Double) ?: 1.0
-            if(this > divider) return (this / divider).roundFigures(2)+" "+map.value
+            if(this >= divider) return (this / divider).roundFigures(2)+" "+map.value
         }
         return this.roundFigures(2)
     }
 
     fun Double.roundFigures(places : Int) : String{
         var bd: BigDecimal = BigDecimal.valueOf(this)
-        bd = bd.setScale(places, RoundingMode.HALF_UP)
+        bd = bd.setScale(places, RoundingMode.HALF_EVEN)
         var text = bd.toString()
         if(text.endsWith(".0") && text.length > 2) text = text.substring(0, text.length - 2)
         if(text.endsWith(".00") && text.length > 3) text = text.substring(0, text.length - 3)

@@ -56,7 +56,7 @@ class CustomSeekBar : ConstraintLayout {
             progress = initialProgress
             incrementProgressBy(increment)
             var offsetX = (initialProgress * width / max).toFloat()
-            val formattedProgress = if(maxValue > 100) progress.toDouble().toFinancialValue() else progress.toString()
+            val formattedProgress = if(maxValue > 100) initialProgress.toDouble().toFinancialValue() else initialProgress.toString()
             label?.text = "$labelPrefix$formattedProgress$labelSuffix"
             label?.x = (x +offsetX + thumbOffset.toFloat() / 2.0f)
 
@@ -65,13 +65,13 @@ class CustomSeekBar : ConstraintLayout {
                     if(notifyProgressChanged) onProgressChangedListener?.invoke(p1)
                     notifyProgressChanged = true
                     offsetX = (p1 * (width - (thumbOffset.toFloat() * 2.0)) / max).toFloat()
+                    val doubleProgress = progress.toDouble()
                     val formattedProgress = if(maxValue > 100) progress.toDouble().toFinancialValue() else progress.toString()
                     label?.text = "$labelPrefix$formattedProgress$labelSuffix"
                     label?.x = (x +offsetX + thumbOffset.toFloat() / 2.0f)
                 }
                 override fun onStartTrackingTouch(p0: SeekBar?) {}
                 override fun onStopTrackingTouch(p0: SeekBar?) {}
-
             })
         }
     }
