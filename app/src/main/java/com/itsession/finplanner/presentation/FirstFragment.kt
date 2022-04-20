@@ -25,6 +25,7 @@ class FirstFragment : Fragment(), KoinComponent {
     private val chartViewModel : ChartViewModel by sharedViewModel()
     private val chartAdapter : ChartAdapter = ChartAdapter()
     private var currentlySelected = 0
+    private var isPeriodSelected = false
 
     companion object{
         const val RATE_PROGRESS_INCREMENT = 1
@@ -58,6 +59,7 @@ class FirstFragment : Fragment(), KoinComponent {
         val filteredData = chartData.filter { it.label.contains("12") }
         chartAdapter.setData(data = filteredData, selected = currentlySelected){
             isSelected, position ->
+            isPeriodSelected = isSelected
             currentlySelected = if(isSelected) position else 0
             binding.buttonApplyAll.setIsVisible(isSelected)
             binding.selectedPeriodDetail.apply{
@@ -73,6 +75,7 @@ class FirstFragment : Fragment(), KoinComponent {
                 patrimonyPercentagePassiveIncome.text = getString(R.string.selected_detail_patrimony_percentage_passive_income, (100 * sumPassiveIncome / (selectedChart.value - chartViewModel.initialPatrimony)).roundFigures(1)+"%")
                 monthlyPassiveIncome.text = getString(R.string.selected_detail_monthly_passive_income, (selectedChart.passiveIncome / 12.0).toFinancialValue())
             }
+            setupSeekBars()
         }
     }
 
@@ -83,19 +86,20 @@ class FirstFragment : Fragment(), KoinComponent {
         binding.buttonApplyAll.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
-        val rate = (chartViewModel.rate * 100).toInt()
+
+        val rate = (chartViewModel.rates[currentlySelected] * 100).toInt()
         binding.seekBarRate.setupComponent(rate, RATE_PROGRESS_INCREMENT, "", PERCENTAGE, EXPECTED_RATE, MAX_RATE){
-            chartViewModel.rate = it / 100.0
+            chartViewModel.setRate(currentlySelected, it / 100.0, !isPeriodSelected)
             loadChartData()
         }
 
-        binding.seekBarMonth.setupComponent(chartViewModel.monthSavings.toInt(), SAVINGS_INCREMENT, CURRENCY, "", EXPECTED_MONTH, MAX_MONTHLY_SAVING){
-            chartViewModel.monthSavings = it.toDouble()
+        binding.seekBarMonth.setupComponent(chartViewModel.monthSavings[currentlySelected].toInt(), SAVINGS_INCREMENT, CURRENCY, "", EXPECTED_MONTH, MAX_MONTHLY_SAVING){
+            chartViewModel.setMonthSavings(currentlySelected, it.toDouble(), !isPeriodSelected)
             loadChartData()
         }
 
-        binding.seekBarUnique.setupComponent(chartViewModel.uniqueSavings.toInt(), SAVINGS_INCREMENT, CURRENCY, "", EXPECTED_UNIQUE, MAX_UNIQUE_SAVING){
-            chartViewModel.uniqueSavings = it.toDouble()
+        binding.seekBarUnique.setupComponent(chartViewModel.uniqueSavings[currentlySelected].toInt(), SAVINGS_INCREMENT, CURRENCY, "", EXPECTED_UNIQUE, MAX_UNIQUE_SAVING){
+            chartViewModel.setUniqueSavings(currentlySelected, it.toDouble(), !isPeriodSelected)
             loadChartData()
         }
 
@@ -103,6 +107,12 @@ class FirstFragment : Fragment(), KoinComponent {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
             adapter = chartAdapter
         }
+    }
+
+    private fun setupSeekBars(){
+        binding.seekBarRate.setProgressWithoutListener((chartViewModel.rates[currentlySelected] * 100).toInt())
+        binding.seekBarUnique.setProgressWithoutListener(chartViewModel.uniqueSavings[currentlySelected].toInt())
+        binding.seekBarMonth.setProgressWithoutListener(chartViewModel.monthSavings[currentlySelected].toInt())
     }
 
     override fun onDestroyView() {

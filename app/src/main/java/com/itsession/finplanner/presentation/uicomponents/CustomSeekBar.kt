@@ -25,6 +25,10 @@ class CustomSeekBar : ConstraintLayout {
     var labelPrefix : String = ""
     var labelTitle : String = ""
     var onProgressChangedListener : ((Int)->Unit)? = null
+    var label : TextView? = null
+    var title : TextView? = null
+    var seekBar : SeekBar? = null
+    var notifyProgressChanged = true
 
     fun setupComponent(initialProgress : Int, increment : Int, labelPrefix : String = "", labelSuffix : String = "", labelTitle : String = "", maxValue : Int, onProgressChangedListener : ((Int)->Unit)? = null){
         this.initialProgress = initialProgress
@@ -42,10 +46,10 @@ class CustomSeekBar : ConstraintLayout {
     }
 
     private fun setView(){
-        val label = findViewById<TextView>(R.id.custom_seek_bar_label)
-        val title = findViewById<TextView>(R.id.custom_seek_bar_title)
-        val seekBar = findViewById<SeekBar>(R.id.custom_seek_bar)
-        title.text = labelTitle
+        label = findViewById<TextView>(R.id.custom_seek_bar_label)
+        title = findViewById<TextView>(R.id.custom_seek_bar_title)
+        seekBar = findViewById<SeekBar>(R.id.custom_seek_bar)
+        title?.text = labelTitle
 
         seekBar?.apply {
             max = maxValue
@@ -58,7 +62,8 @@ class CustomSeekBar : ConstraintLayout {
 
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
                 override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                    onProgressChangedListener?.invoke(p1)
+                    if(notifyProgressChanged) onProgressChangedListener?.invoke(p1)
+                    notifyProgressChanged = true
                     offsetX = (p1 * (width - (thumbOffset.toFloat() * 2.0)) / max).toFloat()
                     val formattedProgress = if(maxValue > 100) progress.toDouble().toFinancialValue() else progress.toString()
                     label?.text = "$labelPrefix$formattedProgress$labelSuffix"
@@ -69,5 +74,10 @@ class CustomSeekBar : ConstraintLayout {
 
             })
         }
+    }
+
+    fun setProgressWithoutListener(progress : Int){
+        seekBar?.progress = progress
+        notifyProgressChanged = false
     }
 }
