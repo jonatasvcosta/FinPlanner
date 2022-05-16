@@ -1,6 +1,6 @@
 package com.itsession.finplanner
 
-import com.itsession.finplanner.presentation.domain.ExtensionMethods.toFinancialValue
+import domain.ExtensionMethods.toFinancialValue
 import org.junit.Test
 
 import org.junit.Assert.*

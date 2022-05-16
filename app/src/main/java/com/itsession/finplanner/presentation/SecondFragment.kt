@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.itsession.finplanner.R
 import com.itsession.finplanner.databinding.FragmentSecondBinding
-import com.itsession.finplanner.presentation.domain.InputScreenData
-import com.itsession.finplanner.presentation.domain.InputScreenType
+import domain.InputScreenData
+import domain.InputScreenType
 import org.koin.android.compat.SharedViewModelCompat.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.component.KoinComponent

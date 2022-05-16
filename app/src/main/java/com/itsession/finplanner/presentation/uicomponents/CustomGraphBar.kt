@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.itsession.finplanner.R
-import com.itsession.finplanner.presentation.domain.ExtensionMethods.toFinancialValue
+import domain.ExtensionMethods.toFinancialValue
 import kotlin.math.roundToInt
 
 class CustomGraphBar : LinearLayout {

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "689589912045",
+    "project_id": "finplanner-a6939",
+    "storage_bucket": "finplanner-a6939.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689589912045:android:d4965ba7509cd97b2227e4",
+        "android_client_info": {
+          "package_name": "com.itsession.finplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689589912045-o6vqrm2migo1ndqjmc43u12i56o9q1tu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmVjLhiCzFCcNavf3ayE_sd2HaV_KEc0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689589912045-o6vqrm2migo1ndqjmc43u12i56o9q1tu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

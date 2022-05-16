@@ -3,9 +3,10 @@ package com.itsession.finplanner.presentation
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.itsession.finplanner.R
-import com.itsession.finplanner.presentation.domain.ChartData
-import com.itsession.finplanner.presentation.domain.InputScreenData
-import com.itsession.finplanner.presentation.domain.InputScreenType
+import data.UserPreferencesDTO
+import domain.ChartData
+import domain.InputScreenData
+import domain.InputScreenType
 import org.koin.core.component.KoinComponent
 import usecase.FinanceUseCase
 
@@ -18,6 +19,7 @@ class ChartViewModel(val financeUseCase: FinanceUseCase) : ViewModel(), KoinComp
     var rates = MutableList(financeUseCase.PROJECTION_YEARS + 1){ 0.1 }
     var age = 22
     var name : String = ""
+
     var chart : MutableList<ChartData> = mutableListOf()
 
     enum class InputStep{ NAME, AGE, SALARY, MONTH_SAVINGS, UNIQUE_SAVINGS, UNIQUE_SAVINGS_MONTH, INITIAL_PATRIMONY }
@@ -41,6 +43,7 @@ class ChartViewModel(val financeUseCase: FinanceUseCase) : ViewModel(), KoinComp
                 chartVariable[i] = value
             }
         }
+        saveUserData()
     }
 
     fun setUniqueSavings(position : Int, value : Double, applyToNextYears : Boolean = false){
@@ -55,7 +58,7 @@ class ChartViewModel(val financeUseCase: FinanceUseCase) : ViewModel(), KoinComp
         setChartVariable(rates, position, value, applyToNextYears)
     }
 
-    fun getInputData(context : Context) : InputScreenData{
+    fun getInputData(context : Context) : InputScreenData {
         return when(currentStep){
             InputStep.AGE -> InputScreenData(context.getString(R.string.input_screen_age), InputScreenType.NUMERIC) {
                 age = it?.toIntOrNull() ?: 0
@@ -78,9 +81,36 @@ class ChartViewModel(val financeUseCase: FinanceUseCase) : ViewModel(), KoinComp
         }
     }
 
+    fun loadUserData(hasDataListener : () -> Unit){
+        financeUseCase.getUserData()?.let {
+            salary = it.salary
+            age = it.age
+            initialPatrimony = it.initialPatrimony
+            monthSavings = it.monthSavings
+            uniqueSavingsMonth = it.uniqueSavingsMonth
+            uniqueSavings = it.uniqueSavings
+            rates = it.rates
+            hasDataListener.invoke()
+        }
+    }
+
+    private fun saveUserData(){
+        val userData = UserPreferencesDTO(
+            initialPatrimony = initialPatrimony,
+            salary = salary,
+            age = age,
+            monthSavings = monthSavings,
+            uniqueSavings = uniqueSavings,
+            uniqueSavingsMonth = uniqueSavingsMonth,
+            rates = rates
+        )
+        financeUseCase.saveUserData(userData)
+    }
+
     fun nextStep(finishCallBack : () -> Unit){
         when(currentStep){
             InputStep.AGE -> {
+                financeUseCase.clearData()
                 currentStep = InputStep.SALARY
                 setDefaultValues()
             }
@@ -89,6 +119,7 @@ class ChartViewModel(val financeUseCase: FinanceUseCase) : ViewModel(), KoinComp
             InputStep.INITIAL_PATRIMONY -> currentStep = InputStep.UNIQUE_SAVINGS
             InputStep.UNIQUE_SAVINGS -> currentStep = InputStep.UNIQUE_SAVINGS_MONTH
             else -> {
+                saveUserData()
                 finishCallBack.invoke()
                 currentStep = InputStep.AGE
             }

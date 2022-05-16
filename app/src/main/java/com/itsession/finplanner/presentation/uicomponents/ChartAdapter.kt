@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.itsession.finplanner.databinding.GraphCellBinding
-import com.itsession.finplanner.presentation.domain.ChartData
+import domain.ChartData
 
 class ChartAdapter() : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
     companion object{

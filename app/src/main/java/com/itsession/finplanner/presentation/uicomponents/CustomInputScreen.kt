@@ -9,9 +9,9 @@ import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.itsession.finplanner.R
-import com.itsession.finplanner.presentation.domain.ExtensionMethods.setIsVisible
-import com.itsession.finplanner.presentation.domain.InputScreenData
-import com.itsession.finplanner.presentation.domain.InputScreenType
+import domain.ExtensionMethods.setIsVisible
+import domain.InputScreenData
+import domain.InputScreenType
 
 class CustomInputScreen : ConstraintLayout {
     constructor(context: Context) : super(context)

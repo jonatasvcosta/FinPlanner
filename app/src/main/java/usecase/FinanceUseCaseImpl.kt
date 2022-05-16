@@ -1,16 +1,33 @@
 package usecase
 
-import com.itsession.finplanner.presentation.domain.ChartData
+import android.content.Context
+import data.UserPreferencesDTO
+import data.UserPreferencesRepository
+import domain.ChartData
 import java.util.*
 import kotlin.math.pow
 
-class FinanceUseCaseImpl : FinanceUseCase {
+class FinanceUseCaseImpl(val repository : UserPreferencesRepository, val context : Context) : FinanceUseCase {
     companion object{
         const val MONTH_INTERVAL = (1.0/12.0)
         const val MONTHS_IN_YEAR = 12
     }
 
+    override val shouldShowInputSteps: Boolean = repository.hasData(context)
     override val PROJECTION_YEARS: Int = 25
+
+    override fun getUserData(): UserPreferencesDTO? {
+        if(!repository.hasData(context)) return null
+        return repository.getData(context)
+    }
+
+    override fun saveUserData(userData: UserPreferencesDTO) {
+        repository.saveData(context, userData)
+    }
+
+    override fun clearData() {
+        repository.clearData(context)
+    }
 
     override fun getChartData(
         age: Int,

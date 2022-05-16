@@ -9,12 +9,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.itsession.finplanner.R
 import com.itsession.finplanner.databinding.FragmentFirstBinding
-import com.itsession.finplanner.presentation.domain.ExtensionMethods.roundFigures
-import com.itsession.finplanner.presentation.domain.ExtensionMethods.setIsVisible
-import com.itsession.finplanner.presentation.domain.ExtensionMethods.toFinancialValue
+import domain.ExtensionMethods.roundFigures
+import domain.ExtensionMethods.setIsVisible
+import domain.ExtensionMethods.toFinancialValue
 import com.itsession.finplanner.presentation.uicomponents.ChartAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.component.KoinComponent
+import java.lang.NumberFormatException
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
