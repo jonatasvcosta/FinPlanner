@@ -4,5 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
+    <LinearLayout
+        android:id="@+id/graph_bar_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.itsession.finplanner.presentation.uicomponents.CustomGraphBar
+            android:id="@+id/graph_bar_example"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </ScrollView>

@@ -5,5 +5,58 @@
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/custom_input_title"
+        style="@style/TextAppearance.Material3.LabelLarge"
+        android:layout_margin="@dimen/margin_large"
+        android:textSize="@dimen/text_medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Qual é o seu nome?"/>
+    <LinearLayout
+        android:id="@+id/container_edit_text"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_large"
+        android:paddingTop="@dimen/margin_default"
+        android:layout_margin="@dimen/margin_default"
+        app:layout_constraintTop_toBottomOf="@id/custom_input_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/custom_input_edit_text_prefix"
+            android:layout_marginEnd="@dimen/padding_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency"/>
+        <EditText
+            android:id="@+id/custom_input_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <NumberPicker
+        android:id="@+id/month_picker"
+        android:layout_margin="@dimen/margin_default"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_input_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/custom_input_confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/margin_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:tint="@color/white"
+        app:srcCompat="@drawable/ic_arrow_full_right_white"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

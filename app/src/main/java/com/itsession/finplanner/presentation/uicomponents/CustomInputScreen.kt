@@ -24,5 +24,6 @@ class CustomInputScreen : ConstraintLayout {
 
     init{
         View.inflate(context, R.layout.custom_input_screen, this)
+        
     }
 }
