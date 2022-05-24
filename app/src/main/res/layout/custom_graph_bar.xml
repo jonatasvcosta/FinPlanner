@@ -6,35 +6,5 @@
     android:paddingHorizontal="8dp"
     android:gravity="center_horizontal"
     android:orientation="vertical">
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <View
-            android:id="@+id/graphbar_background"
-            android:layout_width="40dp"
-            android:layout_height="100dp"
-            android:alpha="0.5"
-            android:background="@color/grey"/>
-        <View
-            android:layout_gravity="bottom"
-            android:id="@+id/graphbar_colored"
-            android:layout_width="40dp"
-            android:layout_height="0dp"
-            android:background="@color/accent"/>
-    </FrameLayout>
-    <TextView
-        android:id="@+id/graphbar_label"
-        android:layout_marginTop="12sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_medium"
-        tools:text="Jan"/>
-    <TextView
-        android:id="@+id/graphbar_value"
-        android:layout_marginTop="12sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/text_small"
-        android:textColor="@color/black"
-        tools:text="10.31K"/>
+
 </LinearLayout>

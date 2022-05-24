@@ -39,9 +39,9 @@ class MainActivity : AppCompatActivity(), KoinComponent{
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        chartViewModel.loadUserData {
+        //chartViewModel.loadUserData {
             navController.navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
+        //}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

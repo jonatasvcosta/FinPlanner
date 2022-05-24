@@ -38,24 +38,8 @@ class SecondFragment : Fragment(), KoinComponent {
 
     }
 
-    private fun setupInputScreen(){
-        context?.let {
-            binding.customInputScreen.setupInputScreen(
-                chartViewModel.getInputData(it)
-            ){
-                chartViewModel.nextStep {
-                    findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-                }
-                setupInputScreen()
-            }
-        }
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupInputScreen()
-        binding.customInputScreen.editText?.performClick()
     }
 
     override fun onDestroyView() {

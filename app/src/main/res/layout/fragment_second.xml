@@ -8,8 +8,4 @@
     android:gravity="center_horizontal"
     tools:context=".presentation.SecondFragment">
 
-    <com.itsession.finplanner.presentation.uicomponents.CustomInputScreen
-        android:id="@+id/custom_input_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 </LinearLayout>
