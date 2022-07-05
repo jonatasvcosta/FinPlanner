@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import domain.ExtensionMethods.roundFigures
 import domain.ExtensionMethods.setIsVisible
 import domain.ExtensionMethods.toFinancialValue
 import com.itsession.finplanner.presentation.uicomponents.ChartAdapter
+import domain.ChartData
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.component.KoinComponent
 import java.lang.NumberFormatException
@@ -40,6 +42,17 @@ class FirstFragment : Fragment(), KoinComponent {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.portfolioGraph.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.portfolioGraph.adapter = ChartAdapter().apply {
+            setData(
+                listOf(ChartData("Jan / 2022", 1000.0), ChartData("Jan / 2023", 1100.0),
+                    ChartData("Jan / 2024", 1400.0), ChartData("Jan / 2025", 1700.0),
+                    ChartData("Jan / 2026", 2100.0), ChartData("Jan / 2027", 3000.0)), 0,
+                onPeriodSelectedListener = { selected, position ->
+                    Toast.makeText(context, "Item "+position+" is " +if(selected)"selected" else "unselected", Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
     }
 
     override fun onResume() {

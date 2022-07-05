@@ -3,5 +3,8 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-
+    <com.itsession.finplanner.presentation.uicomponents.CustomGraphBar
+        android:id="@+id/graph_bar_cell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

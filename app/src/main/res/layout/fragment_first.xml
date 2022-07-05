@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
-        android:id="@+id/graph_bar_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <com.itsession.finplanner.presentation.uicomponents.CustomGraphBar
-            android:id="@+id/graph_bar_example"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_extra_large"
+        android:layout_marginTop="@dimen/margin_large"
+        tools:context=".presentation.FirstFragment">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/portfolio_graph"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
